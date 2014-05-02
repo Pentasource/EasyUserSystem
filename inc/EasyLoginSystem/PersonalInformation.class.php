@@ -2,6 +2,7 @@
 
 class PersonalInformation {
 
+	private $uid;
 	private $firstName;
 	private $lastName;
 	private $dateOfBirth;
@@ -13,11 +14,12 @@ class PersonalInformation {
 	private $phoneNumber;
 
 	public function __construct($userId) {
-		$this->fetchInformation();
+		$this -> uid = $userId;
+		$this -> fetchInformation();
 	}
 
 	public function refresh() {
-		$this->fetchInformation();
+		$this -> fetchInformation();
 	}
 
 	private function fetchInformation() {
@@ -26,11 +28,11 @@ class PersonalInformation {
 	
 			SELECT *
 			FROM personal_information
-			WHERE uid=$userId
+			WHERE uid='$uid'
 		
 SQL;
 
-		$personalInformation = Database::query($statement) -> fetch_array(MYSQLI_ASSOC);
+		$personalInformation = DatabaseSystem::query($statement) -> fetch_array(MYSQLI_ASSOC);
 
 		$this -> setFirstName($personalInformation['firstName']);
 		$this -> setLastName($personalInformation['lastName']);
@@ -52,8 +54,17 @@ SQL;
 		return $this -> firstName;
 	}
 
-	public function changeFirstName() {
-		//TODO
+	public function changeFirstName($firstName) {
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET firstName='$firstName'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setLastName($lastName) {
@@ -65,7 +76,16 @@ SQL;
 	}
 
 	public function changeLastName($lastName) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET lastName='$lastName'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setDateOfBirth($dateOfBirth) {
@@ -77,7 +97,16 @@ SQL;
 	}
 
 	public function changeDateOfBirth($dateOfBirth) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET dateOfBirth='$dateOfBirth'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setStreet($street) {
@@ -89,7 +118,16 @@ SQL;
 	}
 
 	public function changeStreet($street) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET street='$street'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setHouseNumber($houseNumber) {
@@ -101,7 +139,16 @@ SQL;
 	}
 
 	public function changeHouseNumber($houseNumber) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET houseNumber='$houseNumber'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setTown($town) {
@@ -113,7 +160,16 @@ SQL;
 	}
 
 	public function changeTown($town) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET town='$town'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setPostCode($postCode) {
@@ -125,7 +181,16 @@ SQL;
 	}
 
 	public function changePostCode($postCode) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET postCode='$postCode'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setEmailVisible($emailVisible) {
@@ -137,7 +202,16 @@ SQL;
 	}
 
 	public function changeEmailVisible($emailVisible) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET emailVisible='$emailVisible'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setPhoneNumber($phoneNumber) {
@@ -149,7 +223,16 @@ SQL;
 	}
 
 	public function changePhoneNumber($phoneNumber) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE personal_information
+		SET phoneNumber='phoneNumber'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 }

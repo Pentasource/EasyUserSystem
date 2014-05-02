@@ -21,7 +21,7 @@ class User {
 				
 				SELECT *
 				FROM users
-				WHERE uid=$userDetail
+				WHERE uid='$userDetail'
 				
 SQL;
 
@@ -32,7 +32,7 @@ SQL;
 				
 				SELECT *
 				FROM users
-				WHERE userEmail=$userDetail
+				WHERE userEmail='$userDetail'
 				
 SQL;
 
@@ -43,13 +43,13 @@ SQL;
 				
 				SELECT *
 				FROM users
-				WHERE userName=$userDetail
+				WHERE userName='$userDetail'
 				
 SQL;
 
 		}
 
-		$information = Database::query($statement) -> fetch_array(MYSQLI_ASSOC);
+		$information = DatabaseSystem::query($statement) -> fetch_array(MYSQLI_ASSOC);
 
 		$this -> setUserId($information['uid']);
 		$this -> setUserName($information['userName']);
@@ -79,7 +79,16 @@ SQL;
 	}
 
 	public function changeUserName($userName) {
-		//TODO
+		$statement = <<<SQL
+		
+		UPDATE users
+		SET userName='$userName'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setUserEmail($userEmail) {
@@ -91,7 +100,16 @@ SQL;
 	}
 
 	public function changeUserMail($userMail) {
-		//TODO
+				$statement = <<<SQL
+		
+		UPDATE users
+		SET userEmail='$userEmail'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setUserPassword($userPassword) {
@@ -103,7 +121,16 @@ SQL;
 	}
 
 	public function changeUserPassword($userPassword) {
-		//TODO
+				$statement = <<<SQL
+		
+		UPDATE users
+		SET userPassword='$userPassword'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setAdmin($isAdmin) {
@@ -115,7 +142,16 @@ SQL;
 	}
 
 	public function changePermission($isAdmin) {
-		//TODO
+				$statement = <<<SQL
+		
+		UPDATE users
+		SET isAdmin='$isAdmin'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	private function setVerified($isVerified) {
@@ -127,7 +163,16 @@ SQL;
 	}
 
 	public function changeVerified($isVerified) {
-		//TODO
+				$statement = <<<SQL
+		
+		UPDATE users
+		SET isVerified='$isVerified'
+		WHERE uid={$this->getUserId()}
+		
+SQL;
+
+		return DatabaseSystem::query($statement);
+
 	}
 
 	public function getPersonalInformation() {
