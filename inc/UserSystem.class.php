@@ -6,11 +6,11 @@ session_start();
 
 class LoginSystem {
 
-	public static function login($username, $password) {
+	public static function login($userDetail, $password) {
 
-		$tempUser = new User($username);
+		$tempUser = new User($userDetail);
 
-		if ($tempUser -> getPassword() != self::hash($password)) {
+		if ($tempUser -> getUserPassword() != self::hash($password)) {
 			unset($tempUser);
 			session_destroy();
 			return false;
@@ -18,6 +18,7 @@ class LoginSystem {
 
 		$_SESSION['user'] = $tempUser;
 		$_SESSION['loggedIn'] = '1';
+		return true;
 
 	}
 
@@ -28,25 +29,24 @@ class LoginSystem {
 
 	public static function userExists($uid) {
 
-		$statement = <<<SQL
-	
-			SELECT *
-			FROM users
-			WHERE uid=$uid
-		
-SQL;
+		$user = new User($uid);
+		return ($user -> getUserId() > 0) ? true : false;
 
-		$result = DatabaseSystem::query($statement);
+	}
 
-		return ($result -> num_rows > 0) ? true : false;
-
+	public static function isLoggedIn() {
+		return (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn']) == '1') ? true : false;
 	}
 
 	public static function register($information) {
 
-		$userName = $information['username'];
+		$userName = $information['userName'];
 		$userEmail = $information['userEmail'];
 		$userPassword = self::hash($information['userPassword']);
+
+		if (LoginSystem::userExists($userName) || LoginSystem::userExists($userEmail)) {
+			return false;
+		}
 
 		$statement = <<<SQL
 	
@@ -58,7 +58,7 @@ SQL;
 SQL;
 
 		DatabaseSystem::query($statement);
-		
+
 		return DatabaseSystem::getLastInsertId();
 
 	}
@@ -75,7 +75,7 @@ SQL;
 		$user = self::getUser($uid);
 		return $user -> isVerified();
 	}
-	
+
 	private static function hash($string) {
 		return md5(sha1($string));
 	}

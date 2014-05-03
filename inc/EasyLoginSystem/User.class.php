@@ -25,7 +25,7 @@ class User {
 				
 SQL;
 
-		} elseif (filter_var($userDetail, FILTER_VALIDATE_EMAILI)) {
+		} elseif (filter_var($userDetail, FILTER_VALIDATE_EMAIL)) {
 			//$userDetail is Email
 
 			$statement = <<<SQL

@@ -24,6 +24,8 @@ class PersonalInformation {
 
 	private function fetchInformation() {
 
+		$uid = $this->uid;
+
 		$statement = <<<SQL
 	
 			SELECT *
