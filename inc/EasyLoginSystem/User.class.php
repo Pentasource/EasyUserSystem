@@ -12,6 +12,10 @@ class User {
 	private $isVerified;
 	private $personalInformation;
 
+	/**
+	 * constructor
+	 * @param $userDetail 	: UID, UserName or Email
+	 */
 	public function __construct($userDetail) {
 
 		if (is_numeric($userDetail)) {
@@ -62,6 +66,12 @@ SQL;
 
 	}
 
+	/**
+	 *	ALL FOLLOWING FUNCTIONS SHOULD BE SELF-EXPLANATORY
+	 * ======
+	 * (The difference between Set and Change is that set only affects the server copy of the user (i.e. this class) where as change also updates the database)
+	 */
+
 	public function setUserId($userId) {
 		$this -> userId = $userId;
 	}
@@ -100,7 +110,7 @@ SQL;
 	}
 
 	public function changeUserMail($userMail) {
-				$statement = <<<SQL
+		$statement = <<<SQL
 		
 		UPDATE users
 		SET userEmail='$userEmail'
@@ -121,7 +131,7 @@ SQL;
 	}
 
 	public function changeUserPassword($userPassword) {
-				$statement = <<<SQL
+		$statement = <<<SQL
 		
 		UPDATE users
 		SET userPassword='$userPassword'
@@ -142,7 +152,7 @@ SQL;
 	}
 
 	public function changePermission($isAdmin) {
-				$statement = <<<SQL
+		$statement = <<<SQL
 		
 		UPDATE users
 		SET isAdmin='$isAdmin'
@@ -163,7 +173,7 @@ SQL;
 	}
 
 	public function changeVerified($isVerified) {
-				$statement = <<<SQL
+		$statement = <<<SQL
 		
 		UPDATE users
 		SET isVerified='$isVerified'

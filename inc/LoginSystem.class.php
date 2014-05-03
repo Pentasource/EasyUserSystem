@@ -4,8 +4,17 @@ require_once 'DatabaseSystem.class.php';
 require_once 'EasyLoginSystem/User.class.php';
 session_start();
 
+/**
+ * Handles all login-related stuff
+ * @class LoginSystem
+ */
 class LoginSystem {
 
+	/**
+	 * login the user with supplied userDetail and password
+	 * @param $userDetail 	: UID, UserName or Email
+	 * @param $password 	: password
+	 */
 	public static function login($userDetail, $password) {
 
 		$tempUser = new User($userDetail);
@@ -22,22 +31,40 @@ class LoginSystem {
 
 	}
 
+	/**
+	 * clear session and log out
+	 */
 	public static function logOut() {
 		unset($_SESSION['user']);
 		unset($_SESSION['loggedIn']);
 	}
 
-	public static function userExists($uid) {
+	/**
+	 * checks if the user with the supplied userDetail exists
+	 * @param $userDetail 	: UID, UserName or Email
+	 */
+	public static function userExists($userDetail) {
 
-		$user = new User($uid);
+		$user = new User($userDetail);
 		return ($user -> getUserId() > 0) ? true : false;
 
 	}
 
+	/**
+	 * checks if the current user is logged in
+	 */
 	public static function isLoggedIn() {
 		return (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn']) == '1') ? true : false;
 	}
 
+	/**
+	 * creates a new user
+	 * @param $information 	: array(
+	 * 		"username",
+	 * 		"userEmail",
+	 * 		"userPassword"
+	 * )
+	 */
 	public static function register($information) {
 
 		$userName = $information['userName'];
@@ -63,19 +90,35 @@ SQL;
 
 	}
 
+	/**
+	 * returns a User-object
+	 * @param $userDetail 	: UID, UserName or Email
+	 */
 	public static function getUser($userDetail) {
 		return new User($userDetail);
 	}
 
+	/**
+	 * Sets the account to be verified
+	 * @param $userDetail 	: UID, UserName or Email
+	 */
 	public static function verifyAccount($uid) {
 		$user = self::getUser($uid) -> changeVerified("1");
 	}
 
+	/**
+	 * checks if the account is verified
+	 * @param $userDetail 	: UID, UserName or Email
+	 */
 	public static function isAccountVerified($uid) {
 		$user = self::getUser($uid);
 		return $user -> isVerified();
 	}
 
+	/**
+	 * hashes a string
+	 * @param $string 	: the string to be hashed
+	 */
 	private static function hash($string) {
 		return md5(sha1($string));
 	}

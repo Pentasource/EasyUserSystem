@@ -13,18 +13,27 @@ class PersonalInformation {
 	private $emailVisible;
 	private $phoneNumber;
 
+	/**
+	 * constructor
+	 */
 	public function __construct($userId) {
 		$this -> uid = $userId;
 		$this -> fetchInformation();
 	}
 
+	/**
+	 * refreshes personal information (i.e. make them up to date)
+	 */
 	public function refresh() {
 		$this -> fetchInformation();
 	}
 
+	/**
+	 * fetch personal information from the database
+	 */
 	private function fetchInformation() {
 
-		$uid = $this->uid;
+		$uid = $this -> uid;
 
 		$statement = <<<SQL
 	
@@ -47,6 +56,12 @@ SQL;
 		$this -> setPhoneNumber($personalInformation['phoneNumber']);
 
 	}
+
+	/**
+	 *	ALL FOLLOWING FUNCTIONS SHOULD BE SELF-EXPLANATORY
+	 * ======
+	 * (The difference between Set and Change is that set only affects the server copy of the user (i.e. this class) where as change also updates the database)
+	 */
 
 	private function setFirstName($firstName) {
 		$this -> firstName = $firstName;
