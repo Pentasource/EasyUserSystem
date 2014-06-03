@@ -109,7 +109,7 @@ SQL;
 		return $this -> userEmail;
 	}
 
-	public function changeUserMail($userMail) {
+	public function changeUserMail($userEmail) {
 		$statement = <<<SQL
 		
 		UPDATE users

@@ -10,11 +10,12 @@ session_start();
  */
 class LoginSystem {
 
-	/**
-	 * login the user with supplied userDetail and password
-	 * @param $userDetail 	: UID, UserName or Email
-	 * @param $password 	: password
-	 */
+    /**
+     * login the user with supplied userDetail and password
+     * @param $userDetail : UID, UserName or Email
+     * @param $password : password
+     * @return bool
+     */
 	public static function login($userDetail, $password) {
 
 		$tempUser = new User($userDetail);
@@ -39,10 +40,11 @@ class LoginSystem {
 		unset($_SESSION['loggedIn']);
 	}
 
-	/**
-	 * checks if the user with the supplied userDetail exists
-	 * @param $userDetail 	: UID, UserName or Email
-	 */
+    /**
+     * checks if the user with the supplied userDetail exists
+     * @param $userDetail : UID, UserName or Email
+     * @return bool
+     */
 	public static function userExists($userDetail) {
 
 		$user = new User($userDetail);
@@ -57,14 +59,15 @@ class LoginSystem {
 		return (isset($_SESSION['loggedIn']) && ($_SESSION['loggedIn']) == '1') ? true : false;
 	}
 
-	/**
-	 * creates a new user
-	 * @param $information 	: array(
-	 * 		"username",
-	 * 		"userEmail",
-	 * 		"userPassword"
-	 * )
-	 */
+    /**
+     * creates a new user
+     * @param $information : array(
+     *        "username",
+     *        "userEmail",
+     *        "userPassword"
+     * )
+     * @return bool
+     */
 	public static function register($information) {
 
 		$userName = $information['userName'];
@@ -90,35 +93,40 @@ SQL;
 
 	}
 
-	/**
-	 * returns a User-object
-	 * @param $userDetail 	: UID, UserName or Email
-	 */
+    /**
+     * returns a User-object
+     * @param $userDetail : UID, UserName or Email
+     * @return \User
+     */
 	public static function getUser($userDetail) {
 		return new User($userDetail);
 	}
 
-	/**
-	 * Sets the account to be verified
-	 * @param $userDetail 	: UID, UserName or Email
-	 */
+    /**
+     * Sets the account to be verified
+     * @param $uid
+     * @internal param $userDetail : UID, UserName or Email
+     */
 	public static function verifyAccount($uid) {
 		$user = self::getUser($uid) -> changeVerified("1");
 	}
 
-	/**
-	 * checks if the account is verified
-	 * @param $userDetail 	: UID, UserName or Email
-	 */
+    /**
+     * checks if the account is verified
+     * @param $uid
+     * @return
+     * @internal param $userDetail : UID, UserName or Email
+     */
 	public static function isAccountVerified($uid) {
 		$user = self::getUser($uid);
 		return $user -> isVerified();
 	}
 
-	/**
-	 * hashes a string
-	 * @param $string 	: the string to be hashed
-	 */
+    /**
+     * hashes a string
+     * @param $string : the string to be hashed
+     * @return string
+     */
 	private static function hash($string) {
 		return md5(sha1($string));
 	}

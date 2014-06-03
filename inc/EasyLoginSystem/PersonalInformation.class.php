@@ -1,41 +1,45 @@
 <?php
 
-class PersonalInformation {
+class PersonalInformation
+{
 
-	private $uid;
-	private $firstName;
-	private $lastName;
-	private $dateOfBirth;
-	private $street;
-	private $houseNumber;
-	private $town;
-	private $postCode;
-	private $emailVisible;
-	private $phoneNumber;
+    private $uid;
+    private $firstName;
+    private $lastName;
+    private $dateOfBirth;
+    private $street;
+    private $houseNumber;
+    private $town;
+    private $postCode;
+    private $emailVisible;
+    private $phoneNumber;
 
-	/**
-	 * constructor
-	 */
-	public function __construct($userId) {
-		$this -> uid = $userId;
-		$this -> fetchInformation();
-	}
+    /**
+     * constructor
+     */
+    public function __construct($userId)
+    {
+        $this->setUserId($userId);
+        $this->fetchInformation();
+    }
 
-	/**
-	 * refreshes personal information (i.e. make them up to date)
-	 */
-	public function refresh() {
-		$this -> fetchInformation();
-	}
+    /**
+     * refreshes personal information (i.e. make them up to date)
+     */
+    public function refresh()
+    {
+        $this->fetchInformation();
+    }
 
-	/**
-	 * fetch personal information from the database
-	 */
-	private function fetchInformation() {
+    /**
+     * fetch personal information from the database
+     */
+    private function fetchInformation()
+    {
 
-		$uid = $this -> uid;
+        $uid = $this->getUserID(); //TODO
 
-		$statement = <<<SQL
+        $statement = <<<SQL
 	
 			SELECT *
 			FROM personal_information
@@ -43,36 +47,50 @@ class PersonalInformation {
 		
 SQL;
 
-		$personalInformation = DatabaseSystem::query($statement) -> fetch_array(MYSQLI_ASSOC);
+        $personalInformation = DatabaseSystem::query($statement)->fetch_array(MYSQLI_ASSOC);
 
-		$this -> setFirstName($personalInformation['firstName']);
-		$this -> setLastName($personalInformation['lastName']);
-		$this -> setDateOfBirth($personalInformation['dateOfBirth']);
-		$this -> setStreet($personalInformation['street']);
-		$this -> setHouseNumber($personalInformation['houseNumber']);
-		$this -> setTown($personalInformation['town']);
-		$this -> setPostCode($personalInformation['postCode']);
-		$this -> setEmailVisible($personalInformation['emailVisible']);
-		$this -> setPhoneNumber($personalInformation['phoneNumber']);
+        $this->setFirstName($personalInformation['firstName']);
+        $this->setLastName($personalInformation['lastName']);
+        $this->setDateOfBirth($personalInformation['dateOfBirth']);
+        $this->setStreet($personalInformation['street']);
+        $this->setHouseNumber($personalInformation['houseNumber']);
+        $this->setTown($personalInformation['town']);
+        $this->setPostCode($personalInformation['postCode']);
+        $this->setEmailVisible($personalInformation['emailVisible']);
+        $this->setPhoneNumber($personalInformation['phoneNumber']);
 
-	}
+    }
 
-	/**
-	 *	ALL FOLLOWING FUNCTIONS SHOULD BE SELF-EXPLANATORY
-	 * ======
-	 * (The difference between Set and Change is that set only affects the server copy of the user (i.e. this class) where as change also updates the database)
-	 */
+    /**
+     *    ALL FOLLOWING FUNCTIONS SHOULD BE SELF-EXPLANATORY
+     * ======
+     * (The difference between Set and Change is that set only affects the server copy of the user (i.e. this class) where as change also updates the database)
+     */
 
-	private function setFirstName($firstName) {
-		$this -> firstName = $firstName;
-	}
 
-	public function getFirstName() {
-		return $this -> firstName;
-	}
+    private function setUserID($uid)
+    {
+        $this->uid = $uid;
+    }
 
-	public function changeFirstName($firstName) {
-		$statement = <<<SQL
+    public function getUserID()
+    {
+        return $this->uid;
+    }
+
+    private function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    public function changeFirstName($firstName)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET firstName='$firstName'
@@ -80,20 +98,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setLastName($lastName) {
-		$this -> lastName = $lastName;
-	}
+    private function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
 
-	public function getLastName() {
-		return $this -> lastName;
-	}
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
 
-	public function changeLastName($lastName) {
-		$statement = <<<SQL
+    public function changeLastName($lastName)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET lastName='$lastName'
@@ -101,20 +122,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setDateOfBirth($dateOfBirth) {
-		$this -> dateOfBirth = $dateOfBirth;
-	}
+    private function setDateOfBirth($dateOfBirth)
+    {
+        $this->dateOfBirth = $dateOfBirth;
+    }
 
-	public function getDateOfBirth() {
-		return $this -> dateOfBirth;
-	}
+    public function getDateOfBirth()
+    {
+        return $this->dateOfBirth;
+    }
 
-	public function changeDateOfBirth($dateOfBirth) {
-		$statement = <<<SQL
+    public function changeDateOfBirth($dateOfBirth)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET dateOfBirth='$dateOfBirth'
@@ -122,20 +146,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setStreet($street) {
-		$this -> street = $street;
-	}
+    private function setStreet($street)
+    {
+        $this->street = $street;
+    }
 
-	public function getStreet() {
-		return $this -> street;
-	}
+    public function getStreet()
+    {
+        return $this->street;
+    }
 
-	public function changeStreet($street) {
-		$statement = <<<SQL
+    public function changeStreet($street)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET street='$street'
@@ -143,20 +170,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setHouseNumber($houseNumber) {
-		$this -> houseNumber = $houseNumber;
-	}
+    private function setHouseNumber($houseNumber)
+    {
+        $this->houseNumber = $houseNumber;
+    }
 
-	public function getHouseNumber() {
-		return $this -> houseNumber;
-	}
+    public function getHouseNumber()
+    {
+        return $this->houseNumber;
+    }
 
-	public function changeHouseNumber($houseNumber) {
-		$statement = <<<SQL
+    public function changeHouseNumber($houseNumber)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET houseNumber='$houseNumber'
@@ -164,20 +194,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setTown($town) {
-		$this -> town = $town;
-	}
+    private function setTown($town)
+    {
+        $this->town = $town;
+    }
 
-	public function getTown() {
-		return $this -> town;
-	}
+    public function getTown()
+    {
+        return $this->town;
+    }
 
-	public function changeTown($town) {
-		$statement = <<<SQL
+    public function changeTown($town)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET town='$town'
@@ -185,20 +218,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setPostCode($postCode) {
-		$this -> postCode = $postCode;
-	}
+    private function setPostCode($postCode)
+    {
+        $this->postCode = $postCode;
+    }
 
-	public function getPostCode() {
-		return $this -> postCode;
-	}
+    public function getPostCode()
+    {
+        return $this->postCode;
+    }
 
-	public function changePostCode($postCode) {
-		$statement = <<<SQL
+    public function changePostCode($postCode)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET postCode='$postCode'
@@ -206,20 +242,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setEmailVisible($emailVisible) {
-		$this -> emailVisible = $emailVisible;
-	}
+    private function setEmailVisible($emailVisible)
+    {
+        $this->emailVisible = $emailVisible;
+    }
 
-	public function isEmailVisible() {
-		return $this -> emailVisible;
-	}
+    public function isEmailVisible()
+    {
+        return $this->emailVisible;
+    }
 
-	public function changeEmailVisible($emailVisible) {
-		$statement = <<<SQL
+    public function changeEmailVisible($emailVisible)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET emailVisible='$emailVisible'
@@ -227,20 +266,23 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
-	private function setPhoneNumber($phoneNumber) {
-		$this -> phoneNumber = $phoneNumber;
-	}
+    private function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
 
-	public function getPhoneNumber() {
-		return $this -> phoneNumber;
-	}
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
 
-	public function changePhoneNumber($phoneNumber) {
-		$statement = <<<SQL
+    public function changePhoneNumber($phoneNumber)
+    {
+        $statement = <<<SQL
 		
 		UPDATE personal_information
 		SET phoneNumber='phoneNumber'
@@ -248,8 +290,8 @@ SQL;
 		
 SQL;
 
-		return DatabaseSystem::query($statement);
+        return DatabaseSystem::query($statement);
 
-	}
+    }
 
 }
