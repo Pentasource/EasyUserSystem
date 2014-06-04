@@ -6,7 +6,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 $info = array(
-    "username" => $username,
+    "userName" => $username,
     "userEmail" => $email,
     "userPassword" => $password
 );

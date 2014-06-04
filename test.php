@@ -18,6 +18,7 @@ if ($isLoggedIn) {
     echo <<<HTML
 
 <h1>Willkommen, {$user->getUserName()}</h1>
+<a href="logout.php">Logout</a>
 
 HTML;
 
